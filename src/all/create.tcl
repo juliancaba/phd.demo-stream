@@ -3,7 +3,7 @@ set SRCfolder src
 set SRCfiles [list FIFO_l2norm_histAUX_1_V.vhd                 l2norm_mult_hist_scale.vhd                           top_CTRL_manager_CTRL_byteRet_fail.vhd FIFO_l2norm_scale_channel.vhd               l2norm_scale2.vhd                                    top_CTRL_manager_CTRL_words32.vhd FIFO_l2norm_sum_channel.vhd                 l2norm_sum_hist_pow.vhd                              top_CTRL_outputBuffer_CTRL.vhd FIFO_top_CTRL_bufferIN_CTRL_V.vhd           topTesting.vhd                                        FIFO_top_CTRL_bufferOUT_CTRL_V.vhd                                         top_DOUBLE1_CALL_MON.vhd FIFO_top_CTRL_bufferRESP_CTRL_V.vhd         top_CTRL.vhd                                         top_DOUBLE1_REPLAST_A.vhd l2norm.vhd                                  top_CTRL_buildResponse_CTRL.vhd                      top_DOUBLE1_stream.vhd l2norm_fadd_32ns_32ns_32_5_full_dsp.vhd     top_CTRL_forward_CTRL.vhd                            top_DOUBLE2_EXPECT_MON.vhd l2norm_fmul_32ns_32ns_32_4_max_dsp.vhd      top_CTRL_inputBuffer_CTRL.vhd                        top_DOUBLE2_EXPECT_MON_fcmp_32ns_32ns_1_1.vhd l2norm_frecip_32ns_32ns_32_10_full_dsp.vhd  top_CTRL_manager_CTRL.vhd                            top_DOUBLE2_stream.vhd l2norm_fsqrt_32ns_32ns_32_12.vhd top_DOUBLE2_EXPECT_MON_fsub_32ns_32ns_32_5_full_dsp.vhd           top_CTRL_manager_CTRL_byteRet_DOUBLE1_callCount.vhd  top_REG_1.vhd]
 
 set SIMfolder src
-set SIMfiles [list topTesting_tb.vhd]
+set SIMfiles [list ]
 set part xc7z020clg484-1
 
 
