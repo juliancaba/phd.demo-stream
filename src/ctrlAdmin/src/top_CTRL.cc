@@ -25,8 +25,8 @@ void
 outputBuffer_CTRL(hls::stream<unsigned int> &dst)
 {
   unsigned int aux;
-  while(!bufferOUT_OBJ.empty()){
-    aux = bufferOUT_OBJ.read();
+  while(!bufferOUT_CTRL.empty()){
+    aux = bufferOUT_CTRL.read();
     dst.write(aux);
   }
 }
@@ -50,7 +50,7 @@ buildResponseHead_CTRL(hls::stream<unsigned int> &dst,
 {
   int words32;
 
-  // words32 = (header_OBJ.cb<<16) | (header_OBJ.methodID<<4) | flags;
+  // words32 = (header_CTRL.cb<<16) | (header_CTRL.methodID<<4) | flags;
   words32 = (header_CTRL.cb<<16) | (header_CTRL.methodID<<8) | flags;
   dst.write(words32);
   //dst.write(byteHeader[0].words32);

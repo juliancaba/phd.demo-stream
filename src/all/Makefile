@@ -6,7 +6,7 @@ PRODUCER = ../producer
 
 PRJ=tmp
 
-all: genDUT genCONSUMER genPRODUCER genADMIN copy run dcp
+all: genDUT genCONSUMER genPRODUCER genADMIN copy run dcp copyhw
 
 
 run: create.tcl 
@@ -41,7 +41,11 @@ copy:
 	cp $(CONSUMER)/src/* src ;\
 	cp $(PRODUCER)/src/* src ;\
 	$(RM) -rf src/*_tb.vhd ;\
-	cp *.vhd src 
+	cp *.vhd src
+
+copyhw:
+	@mkdir hw_src ;\
+	cp -rL src/* hw_src
 
 clean:
 	$(RM) src -rf $(PRJ) *~ *.jou *.log
