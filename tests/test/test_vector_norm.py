@@ -6,7 +6,6 @@
 import unittest
 from unittest_time import TimeTestCase
 
-from vector_norm import l2norm
 from l2norm_stream import *
 
 
@@ -29,20 +28,17 @@ class TestL2Norm(TimeTestCase):
         self.CONFIGURE_UNITTEST_TIME_OUTPUT_32BIT_WORDS(1)
         self.CONFIGURE_UNITTEST_TIME_ENABLE_CYCLES(0x00000090)
         
-        l2norm_intervalDelay(4)
+        l2norm_intervalDelay(6)
         l2norm_expect(16, ref)
         l2norm_stimuli(16, din)
           
         self.UNITTEST_TIME_CONFIGURE()
-
-        dout=[]
-        l2norm(din, dout)
         
         self.assertTimeLT(200)
         
-        print ("l2norm-CallCountInput {0}\n").format(l2norm_callCountInput())
-        print ("l2norm-CallCountOutput {0}\n").format(l2norm_callCountOutput())
-        print ("l2norm-FailureCount {0}\n").format(l2norm_failureCount())
+        print ("l2norm-CallCountInput {0}".format(l2norm_callCountInput()))
+        print ("l2norm-CallCountOutput {0}".format(l2norm_callCountOutput()))
+        print ("l2norm-FailureCount {0}".format(l2norm_failureCount()))
         l2norm_print_failures()
 
             

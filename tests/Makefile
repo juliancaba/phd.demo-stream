@@ -1,3 +1,3 @@
 
 tests:
-	nosetests3 
+	nosetests3 --nocapture
