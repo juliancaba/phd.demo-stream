@@ -11,8 +11,11 @@ _hw_addr = 0x42000000
 _l2norm_failurecount = 0
 _l2norm_failurecount_vld = 0
 
-_l2norm_callcount = 0
-_l2norm_callcount_vld = 0
+_l2norm_callcountIN = 0
+_l2norm_callcountIN_vld = 0
+
+_l2norm_callcountOUT = 0
+_l2norm_callcountOUT_vld = 0
 
 
 
@@ -38,19 +41,22 @@ def l2norm_expect(size, o):
     
 def l2norm_callCountInput():
     head,payload = sendMessage(_hw_addr, 0x00020200, 0x00000000, None)
-    _callcountInput = int(payload[0],16)
-    return _callcountInput
+    _l2norm_callcountIN = int(payload[0],16)
+    _l2norm_callcountIN_vld = 1
+    return _l2norm_callcountIN
 
     
 def l2norm_callCountOutput():    
     head,payload = sendMessage(_hw_addr, 0x00030200, 0x00000000, None)
-    _callcountOutput = int(payload[0],16)
-    return _callcountOutput
+    _l2norm_callcountOUT = int(payload[0],16)
+    _l2norm_callcountOUT_vld = 1
+    return _l2norm_callcountOUT
 
 
 def l2norm_failureCount():       
     head,payload = sendMessage(_hw_addr, 0x00030400, 0x00000000, None)
     _l2norm_failurecount = int(payload[0],16)
+    _l2norm_failurecount_vld = 1
     return _l2norm_failurecount
 
   
@@ -76,5 +82,38 @@ def l2norm_print_failures():
             print ("\tTime {0}".format(time))
             delay = int(payload[4],16)
             print ("\tDelay {0}".format(delay))
+
+
+def l2norm_print_inputTimes():
+    if _l2norm_callcountIN_vld:
+        readings = _l2norm_callcountIN;
+    else:
+        readings = l2norm_callCountInput();
+
+    if readings == 0:
+        print("{0}: No readings".format(sys._getframe().f_code.co_name))
+    else:
+        print("Readings - {0}".format(sys._getframe().f_code.co_name))
+        for it in range(0,readings):
+            head,payload = sendMessage(_hw_addr, 0x00020300, 0x00000000, None)
+            time = int(payload[0],16)
+            print ("\tTime {0}: {1}".format(it, time))
+
+            
+def l2norm_print_outputTimes():
+    if _l2norm_callcountOUT_vld:
+        writings = _l2norm_callcountOUT;
+    else:
+        writings = l2norm_callCountOutput();
+
+    if writings == 0:
+        print("{0}: No writings".format(sys._getframe().f_code.co_name))
+    else:
+        print("Writings - {0}".format(sys._getframe().f_code.co_name))
+        for it in range(0,writings):
+            head,payload = sendMessage(_hw_addr, 0x00030300, 0x00000000, None)
+            time = int(payload[0],16)
+            print ("\tTime {0}: {1}".format(it, time))
+      
 
 

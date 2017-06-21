@@ -41,6 +41,10 @@ class TestL2Norm(TimeTestCase):
         print ("l2norm-FailureCount {0}".format(l2norm_failureCount()))
         l2norm_print_failures()
 
+        #l2norm_print_inputTimes()
+        #l2norm_print_outputTimes()
+
+        self.assertTrue(l2norm_failureCount()==0)
             
 # if __name__ == '__main__':
 #     unittest.main()
