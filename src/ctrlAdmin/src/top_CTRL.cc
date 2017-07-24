@@ -4,11 +4,6 @@
 #include "wrapper_DOUBLE2_CTRL.h"
 
 
-// union typeHead{
-//   unsigned int words32;
-//   unsigned char words8[4];  
-// }byteHeader[2];
-
 
 void
 inputBuffer_CTRL(hls::stream<unsigned int> &src)
@@ -44,13 +39,34 @@ forward_CTRL(short size)
 
 
 void
+buildResponse_CTRL(hls::stream<unsigned int> &dst,
+		   unsigned short objID, unsigned short size,
+		   unsigned char flags)
+{
+  int words32;
+
+  // words32 = (header_CTRL.cb<<16) | (header_CTRL.methodID<<4) | flags;
+  words32 = (header_CTRL.cb<<16) | (header_CTRL.methodID<<8) | flags;
+  dst.write(words32);
+  //dst.write(byteHeader[0].words32);
+  if(flags & FLAG_HAS_PAYLOAD){
+    words32 = (objID<<16) | size;
+    dst.write(words32);
+    while (!bufferRESP_CTRL.empty())
+      dst.write(bufferRESP_CTRL.read());
+  }
+}
+
+
+
+void
 buildResponseHead_CTRL(hls::stream<unsigned int> &dst,
 		       unsigned short objID, unsigned short size,
 		       unsigned char flags)
 {
   int words32;
 
-  // words32 = (header_CTRL.cb<<16) | (header_CTRL.methodID<<4) | flags;
+  // words32 = (header_OBJ.cb<<16) | (header_OBJ.methodID<<4) | flags;
   words32 = (header_CTRL.cb<<16) | (header_CTRL.methodID<<8) | flags;
   dst.write(words32);
   //dst.write(byteHeader[0].words32);
@@ -70,6 +86,7 @@ buildResponse_CTRL(unsigned short objID, unsigned short size,
       bufferOUT_CTRL.write(bufferRESP_CTRL.read());
   }
 }
+
 
 
 void
@@ -100,15 +117,18 @@ getRequestHead_CTRL()
 }
 
 
-
+  
 void
-manager_CTRL(hls::stream<float> &buffer_histIN, unsigned int callCount_histIN,
+manager_CTRL(hls::stream<float> &buffer_histIN,
+	     unsigned int  callCount_histIN,
 	     hls::stream<unsigned int> &callTime_histIN,
 	     hls::stream<float> &expect_histOUT,
-	     unsigned int callCount_histOUT, hls::stream<unsigned int> &callTime_histOUT,
-	     unsigned int failCount_histOUT, hls::stream<tfail> &fail_histOUT,
+	     unsigned int callCount_histOUT,
+	     hls::stream<unsigned int> &callTime_histOUT,
+	     int failureCount_histOUT,
+	     hls::stream<tfailure> &failure_histOUT,
 	     unsigned int &intervalDelay_histOUT)
-{
+{  
   getRequestHead_CTRL();
 
   
@@ -117,7 +137,7 @@ manager_CTRL(hls::stream<float> &buffer_histIN, unsigned int callCount_histIN,
     if (ID_DOUBLE1_CTRL_return == header_CTRL.methodID){
       running_DOUBLE1_CTRL_return(bufferIN_CTRL, buffer_histIN, header_CTRL.size);
       buildResponseHead_CTRL(bufferOUT_CTRL, ID_DOUBLE1_CTRL, 0,
-			     FLAG_RESPONSE|FLAG_OK);
+			 FLAG_RESPONSE|FLAG_OK);
     }
     else if (ID_DOUBLE1_CTRL_callCount == header_CTRL.methodID){
       running_DOUBLE1_CTRL_callCount(bufferRESP_CTRL, callCount_histIN);
@@ -131,11 +151,11 @@ manager_CTRL(hls::stream<float> &buffer_histIN, unsigned int callCount_histIN,
     }
     else{
       forward_CTRL(header_CTRL.size);
-      buildResponseHead_CTRL(bufferOUT_CTRL, FLAG_FAIL, ID_DOUBLE1_CTRL, 
-			     FLAG_RESPONSE|FLAG_FAIL);
+      buildResponseHead_CTRL(bufferOUT_CTRL, NULL_OBJ, 0, 
+			 FLAG_RESPONSE|FLAG_FAIL);
     }
   }
-  else if (ID_DOUBLE2_CTRL == header_CTRL.objectID)
+  else if (ID_DOUBLE2_CTRL == header_CTRL.objectID){
     //  if (ID_histINdd == header.methodID_flags){
     if (ID_DOUBLE2_CTRL_expect == header_CTRL.methodID){
       running_DOUBLE2_CTRL_expect(bufferIN_CTRL, expect_histOUT, header_CTRL.size);
@@ -152,58 +172,58 @@ manager_CTRL(hls::stream<float> &buffer_histIN, unsigned int callCount_histIN,
       buildResponse_CTRL(ID_DOUBLE2_CTRL, sizeof(ret_DOUBLE2_CTRL_callTime)/DOUBLE2_BUS_WIDTH_BYTES,
 			 FLAG_HAS_PAYLOAD|FLAG_RESPONSE|FLAG_OK);
     }
-    else if (ID_DOUBLE2_CTRL_failCount == header_CTRL.methodID){
-      running_DOUBLE2_CTRL_failCount(bufferRESP_CTRL, failCount_histOUT);
-      buildResponse_CTRL(ID_DOUBLE2_CTRL, sizeof(ret_DOUBLE2_CTRL_failCount)/DOUBLE2_BUS_WIDTH_BYTES,
+    else if (ID_DOUBLE2_CTRL_failureCount == header_CTRL.methodID){
+      running_DOUBLE2_CTRL_failureCount(bufferRESP_CTRL, failureCount_histOUT);
+      buildResponse_CTRL(ID_DOUBLE2_CTRL, sizeof(ret_DOUBLE2_CTRL_failureCount)/DOUBLE2_BUS_WIDTH_BYTES,
 			 FLAG_HAS_PAYLOAD|FLAG_RESPONSE|FLAG_OK);
     }
-    else if (ID_DOUBLE2_CTRL_fail == header_CTRL.methodID){
-      running_DOUBLE2_CTRL_fail(bufferRESP_CTRL, fail_histOUT);
-      buildResponse_CTRL(ID_DOUBLE2_CTRL, sizeof(ret_DOUBLE2_CTRL_fail)/DOUBLE2_BUS_WIDTH_BYTES,
+    else if (ID_DOUBLE2_CTRL_failure == header_CTRL.methodID){
+      running_DOUBLE2_CTRL_failure(bufferRESP_CTRL, failure_histOUT);
+      buildResponse_CTRL(ID_DOUBLE2_CTRL, sizeof(ret_DOUBLE2_CTRL_failure)/DOUBLE2_BUS_WIDTH_BYTES,
 			 FLAG_HAS_PAYLOAD|FLAG_RESPONSE|FLAG_OK);
     }
     else if (ID_DOUBLE2_CTRL_intervalDelay == header_CTRL.methodID){
+      //intervalDelay_histOUT_i = din.read();
       running_DOUBLE2_CTRL_intervalDelay(bufferIN_CTRL, intervalDelay_histOUT);
       buildResponseHead_CTRL(bufferOUT_CTRL, ID_DOUBLE2_CTRL, 0,
-			     FLAG_RESPONSE|FLAG_OK);
+			 FLAG_RESPONSE|FLAG_OK);
     }
     else{
       forward_CTRL(header_CTRL.size);
-      buildResponseHead_CTRL(bufferOUT_CTRL, FLAG_FAIL, ID_DOUBLE2_CTRL, 
-			     FLAG_RESPONSE|FLAG_FAIL);
+      buildResponseHead_CTRL(bufferOUT_CTRL, NULL_OBJ, 0, 
+			 FLAG_RESPONSE|FLAG_FAIL);
     }
+  }
   else{
-      forward_CTRL(header_CTRL.size);
-      buildResponseHead_CTRL(bufferOUT_CTRL, FLAG_FAIL, NULL_OBJ, 
-			     FLAG_RESPONSE|FLAG_FAIL);
+    forward_CTRL(header_CTRL.size);
+    buildResponseHead_CTRL(bufferOUT_CTRL, NULL_OBJ, 0,
+		       FLAG_RESPONSE|FLAG_FAIL);
   }
 }
 
-
+  
 void
-top_CTRL(hls::stream<unsigned int> &din,
-	 hls::stream<unsigned int> &dout,
-	 hls::stream<float> &buffer_histIN,
+top_CTRL(hls::stream<unsigned int> din,
+	 hls::stream<unsigned int> dout,
+	 hls::stream<float> buffer_histIN,
 	 unsigned int  callCount_histIN,
-	 hls::stream<unsigned int> &callTime_histIN,
-	 hls::stream<float> &expect_histOUT,
+	 hls::stream<unsigned int> callTime_histIN,
+	 hls::stream<float> expect_histOUT,
 	 unsigned int callCount_histOUT,
-	 hls::stream<unsigned int> &callTime_histOUT,
-	 int failCount_histOUT, hls::stream<tfail> &fail_histOUT,
+	 hls::stream<unsigned int> callTime_histOUT,
+	 int failureCount_histOUT,
+	 hls::stream<tfailure> failure_histOUT,
 	 unsigned int &intervalDelay_histOUT)
 {
 #pragma HLS INTERFACE ap_stable port=callCount_histIN
 #pragma HLS INTERFACE ap_stable port=callCount_histOUT
-#pragma HLS INTERFACE ap_stable port=failCount_histOUT
-#pragma HLS data_pack variable=fail_histOUT
-  //#pragma HLS INTERFACE ap_fifo port=fail_histOUT
-  //#pragma HLS INTERFACE ap_fifo port=callTime_histOUT
+#pragma HLS INTERFACE ap_stable port=failureCount_histOUT
+#pragma HLS data_pack variable=failure_histOUT
+#pragma HLS STREAM variable=bufferRESP_CTRL depth=32
+
   inputBuffer_CTRL(din);
   manager_CTRL(buffer_histIN, callCount_histIN, callTime_histIN,
 		expect_histOUT, callCount_histOUT, callTime_histOUT,
-		failCount_histOUT, fail_histOUT, intervalDelay_histOUT);
+		failureCount_histOUT, failure_histOUT, intervalDelay_histOUT);
   outputBuffer_CTRL(dout);
 }
-
-
-

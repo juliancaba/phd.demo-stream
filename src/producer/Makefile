@@ -3,12 +3,15 @@ REP_LAST=./stimulator
 
 PRJ=tmp
 
+VERSION=2015
+
+
 all: gen copy 
 
 gen: genMonitor genRepLast
 
-run: 
-	vivado -mode batch -source create.tcl
+run: create_$(VERSION).tcl 
+	vivado -mode batch -source $^
 
 genMonitor:
 	@cd $(DOUBLE_MON);\

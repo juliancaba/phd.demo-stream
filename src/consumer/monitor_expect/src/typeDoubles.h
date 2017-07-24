@@ -2,7 +2,7 @@
 #define TYPEDOUBLES_H
 
 
-struct sfail
+struct sfailure
 {
   unsigned int _callcount;
   float _return;
@@ -10,6 +10,6 @@ struct sfail
   unsigned int _time;
   unsigned int _delay;
 };
-typedef sfail tfail;
+typedef sfailure tfailure;
 
 #endif

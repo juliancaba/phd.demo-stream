@@ -6,6 +6,7 @@
 #include "typeDoublesStream.h"
 
 
+
 const int DOUBLE2_BUS_WIDTH_BYTES = 4; //int
 
 static char ID_DOUBLE2_CTRL=3;
@@ -76,34 +77,34 @@ void running_DOUBLE2_CTRL_callTime(hls::stream<unsigned int> &dst, hls::stream<u
 
 
 ///////////////////////////////////////////////////////////////////////
-//                 Function:   failCount
+//                 Function:   failureCount
 //////////////////////////////////////////////////////////////////////
-//static ap_int<12> ID_DOUBLE2_CTRL_failCount = 4;
-static unsigned char ID_DOUBLE2_CTRL_failCount = 4;
+//static ap_int<12> ID_DOUBLE2_CTRL_failureCount = 4;
+static unsigned char ID_DOUBLE2_CTRL_failureCount = 4;
 
-//const int DOUBLE2_CTRL_FAILCOUNT_WRITE_SIZE_BYTES = 4; //int
+//const int DOUBLE2_CTRL_FAILURECOUNT_WRITE_SIZE_BYTES = 4; //int
 
-struct RETURN_DOUBLE2_CTRL_failCount{
+struct RETURN_DOUBLE2_CTRL_failureCount{
   unsigned int _return;
   // here padding if its necessary
 }__attribute__((packed));
 
-static struct RETURN_DOUBLE2_CTRL_failCount ret_DOUBLE2_CTRL_failCount;
+static struct RETURN_DOUBLE2_CTRL_failureCount ret_DOUBLE2_CTRL_failureCount;
 
-void running_DOUBLE2_CTRL_failCount(hls::stream<unsigned int> &dst, unsigned int failCount_histOUT);
+void running_DOUBLE2_CTRL_failureCount(hls::stream<unsigned int> &dst, unsigned int failureCount_histOUT);
 //////////////////////////////////////////////////////////////////////
 
 
 
 ///////////////////////////////////////////////////////////////////////
-//                 Function:   fail
+//                 Function:   failure
 //////////////////////////////////////////////////////////////////////
-//static ap_int<12> ID_DOUBLE2_CTRL_fail = 5;
-static unsigned char ID_DOUBLE2_CTRL_fail = 5;
+//static ap_int<12> ID_DOUBLE2_CTRL_failure = 5;
+static unsigned char ID_DOUBLE2_CTRL_failure = 5;
 
-//const int DOUBLE2_CTRL_FAIL_WRITE_SIZE_BYTES = 4; //int
+//const int DOUBLE2_CTRL_FAILURE_WRITE_SIZE_BYTES = 4; //int
 
-struct RETURN_DOUBLE2_CTRL_fail{
+struct RETURN_DOUBLE2_CTRL_failure{
   unsigned int _callcount;
   float _return;
   float _expected;
@@ -112,9 +113,9 @@ struct RETURN_DOUBLE2_CTRL_fail{
   // here padding if its necessary
 }__attribute__((packed));
 
-static struct RETURN_DOUBLE2_CTRL_fail ret_DOUBLE2_CTRL_fail;
+static struct RETURN_DOUBLE2_CTRL_failure ret_DOUBLE2_CTRL_failure;
 
-void running_DOUBLE2_CTRL_fail(hls::stream<unsigned int> &dst, hls::stream<tfail> &fail_histOUT);
+void running_DOUBLE2_CTRL_failure(hls::stream<unsigned int> &dst, hls::stream<tfailure> &failure_histOUT);
 //////////////////////////////////////////////////////////////////////
 
 
@@ -122,7 +123,7 @@ void running_DOUBLE2_CTRL_fail(hls::stream<unsigned int> &dst, hls::stream<tfail
 ///////////////////////////////////////////////////////////////////////
 //                 Function:   intervalDelay
 //////////////////////////////////////////////////////////////////////
-//static ap_int<12> ID_DOUBLE2_CTRL_intervalDelay = 6;
+//static ap_int<12> ID_DOUBLE2_CTRL_intervalDelay = 6
 static unsigned char ID_DOUBLE2_CTRL_intervalDelay = 6;
 
 //const int DOUBLE2_CTRL_EXPECT_READ_SIZE_BYTES = 4; //int

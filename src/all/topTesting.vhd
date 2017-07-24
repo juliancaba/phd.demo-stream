@@ -45,10 +45,10 @@ architecture behav of topTesting is
       callTime_histOUT_V_dout      : IN  STD_LOGIC_VECTOR (31 downto 0);
       callTime_histOUT_V_empty_n   : IN  STD_LOGIC;
       callTime_histOUT_V_read      : OUT STD_LOGIC;
-      failCount_histOUT            : IN  STD_LOGIC_VECTOR (31 downto 0);
-      fail_histOUT_V_dout          : IN  STD_LOGIC_VECTOR (159 downto 0);
-      fail_histOUT_V_empty_n       : IN  STD_LOGIC;
-      fail_histOUT_V_read          : OUT STD_LOGIC;
+      failureCount_histOUT         : IN  STD_LOGIC_VECTOR (31 downto 0);
+      failure_histOUT_V_dout       : IN  STD_LOGIC_VECTOR (159 downto 0);
+      failure_histOUT_V_empty_n    : IN  STD_LOGIC;
+      failure_histOUT_V_read       : OUT STD_LOGIC;
       intervalDelay_histOUT        : OUT STD_LOGIC_VECTOR (31 downto 0);
       intervalDelay_histOUT_ap_vld : OUT STD_LOGIC;
       ap_clk                       : IN  STD_LOGIC;
@@ -82,10 +82,10 @@ architecture behav of topTesting is
       callTime_histOUT_V_dout      : OUT STD_LOGIC_VECTOR (31 downto 0);
       callTime_histOUT_V_empty_n   : OUT STD_LOGIC;
       callTime_histOUT_V_read      : IN  STD_LOGIC;
-      failCount_histOUT            : OUT STD_LOGIC_VECTOR (31 downto 0);
-      fail_histOUT_V_dout          : OUT STD_LOGIC_VECTOR (159 downto 0);
-      fail_histOUT_V_empty_n       : OUT STD_LOGIC;
-      fail_histOUT_V_read          : IN  STD_LOGIC;
+      failureCount_histOUT         : OUT STD_LOGIC_VECTOR (31 downto 0);
+      failure_histOUT_V_dout       : OUT STD_LOGIC_VECTOR (159 downto 0);
+      failure_histOUT_V_empty_n    : OUT STD_LOGIC;
+      failure_histOUT_V_read       : IN  STD_LOGIC;
       intervalDelay_histOUT        : IN  STD_LOGIC_VECTOR (31 downto 0);
       intervalDelay_histOUT_ap_vld : IN  STD_LOGIC;
       histOUT_din                  : IN  STD_LOGIC_VECTOR (31 downto 0);
@@ -135,10 +135,10 @@ architecture behav of topTesting is
   signal callTime_histOUT_V_dout      : STD_LOGIC_VECTOR (31 downto 0);
   signal callTime_histOUT_V_empty_n   : STD_LOGIC;
   signal callTime_histOUT_V_read      : STD_LOGIC;
-  signal failCount_histOUT            : STD_LOGIC_VECTOR (31 downto 0);
-  signal fail_histOUT_V_dout          : STD_LOGIC_VECTOR (159 downto 0);
-  signal fail_histOUT_V_empty_n       : STD_LOGIC;
-  signal fail_histOUT_V_read          : STD_LOGIC;
+  signal failureCount_histOUT         : STD_LOGIC_VECTOR (31 downto 0);
+  signal failure_histOUT_V_dout       : STD_LOGIC_VECTOR (159 downto 0);
+  signal failure_histOUT_V_empty_n    : STD_LOGIC;
+  signal failure_histOUT_V_read       : STD_LOGIC;
   signal intervalDelay_histOUT        : STD_LOGIC_VECTOR (31 downto 0);
   signal intervalDelay_histOUT_ap_vld : STD_LOGIC;
 
@@ -195,10 +195,10 @@ begin
       callTime_histOUT_V_dout      => callTime_histOUT_V_dout,
       callTime_histOUT_V_empty_n   => callTime_histOUT_V_empty_n,
       callTime_histOUT_V_read      => callTime_histOUT_V_read,
-      failCount_histOUT            => failCount_histOUT,
-      fail_histOUT_V_dout          => fail_histOUT_V_dout,
-      fail_histOUT_V_empty_n       => fail_histOUT_V_empty_n,
-      fail_histOUT_V_read          => fail_histOUT_V_read,
+      failureCount_histOUT         => failureCount_histOUT,
+      failure_histOUT_V_dout       => failure_histOUT_V_dout,
+      failure_histOUT_V_empty_n    => failure_histOUT_V_empty_n,
+      failure_histOUT_V_read       => failure_histOUT_V_read,
       intervalDelay_histOUT        => intervalDelay_histOUT,
       intervalDelay_histOUT_ap_vld => intervalDelay_histOUT_ap_vld,
       ap_clk                       => ap_clk,
@@ -243,10 +243,10 @@ begin
       callTime_histOUT_V_dout      => callTime_histOUT_V_dout,
       callTime_histOUT_V_empty_n   => callTime_histOUT_V_empty_n,
       callTime_histOUT_V_read      => callTime_histOUT_V_read,
-      failCount_histOUT            => failCount_histOUT,
-      fail_histOUT_V_dout          => fail_histOUT_V_dout,
-      fail_histOUT_V_empty_n       => fail_histOUT_V_empty_n,
-      fail_histOUT_V_read          => fail_histOUT_V_read,
+      failureCount_histOUT         => failureCount_histOUT,
+      failure_histOUT_V_dout       => failure_histOUT_V_dout,
+      failure_histOUT_V_empty_n    => failure_histOUT_V_empty_n,
+      failure_histOUT_V_read       => failure_histOUT_V_read,
       intervalDelay_histOUT        => intervalDelay_histOUT,
       intervalDelay_histOUT_ap_vld => intervalDelay_histOUT_ap_vld,
       histOUT_din                  => histOUT_V_din,

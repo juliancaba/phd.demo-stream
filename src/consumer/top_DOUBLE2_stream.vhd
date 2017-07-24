@@ -11,10 +11,10 @@ entity top_DOUBLE2_stream is
     callTime_histOUT_V_dout      : OUT STD_LOGIC_VECTOR (31 downto 0);
     callTime_histOUT_V_empty_n   : OUT STD_LOGIC;
     callTime_histOUT_V_read      : IN  STD_LOGIC;
-    failCount_histOUT            : OUT STD_LOGIC_VECTOR (31 downto 0);
-    fail_histOUT_V_dout          : OUT STD_LOGIC_VECTOR (159 downto 0);
-    fail_histOUT_V_empty_n       : OUT STD_LOGIC;
-    fail_histOUT_V_read          : IN  STD_LOGIC;
+    failureCount_histOUT            : OUT STD_LOGIC_VECTOR (31 downto 0);
+    failure_histOUT_V_dout          : OUT STD_LOGIC_VECTOR (159 downto 0);
+    failure_histOUT_V_empty_n       : OUT STD_LOGIC;
+    failure_histOUT_V_read          : IN  STD_LOGIC;
     intervalDelay_histOUT        : IN  STD_LOGIC_VECTOR (31 downto 0);
     intervalDelay_histOUT_ap_vld : IN  STD_LOGIC;
 
@@ -48,7 +48,7 @@ architecture behav of top_DOUBLE2_stream is
       ap_clk               : IN  STD_LOGIC;
       ap_rst               : IN  STD_LOGIC;
       intervalDelay_a      : IN  STD_LOGIC_VECTOR (31 downto 0);
-      failcount_a          : OUT STD_LOGIC_VECTOR (31 downto 0);
+      failurecount_a          : OUT STD_LOGIC_VECTOR (31 downto 0);
       buffer_a_V_dout      : IN  STD_LOGIC_VECTOR (31 downto 0);
       buffer_a_V_empty_n   : IN  STD_LOGIC;
       buffer_a_V_read      : OUT STD_LOGIC;
@@ -58,9 +58,9 @@ architecture behav of top_DOUBLE2_stream is
       expect_a_V_dout      : IN  STD_LOGIC_VECTOR (31 downto 0);
       expect_a_V_empty_n   : IN  STD_LOGIC;
       expect_a_V_read      : OUT STD_LOGIC;
-      fail_a_V_din         : OUT STD_LOGIC_VECTOR (159 downto 0);
-      fail_a_V_full_n      : IN  STD_LOGIC;
-      fail_a_V_write       : OUT STD_LOGIC);
+      failure_a_V_din         : OUT STD_LOGIC_VECTOR (159 downto 0);
+      failure_a_V_full_n      : IN  STD_LOGIC;
+      failure_a_V_write       : OUT STD_LOGIC);
   end component top_DOUBLE2_EXPECT_MON;
   
   --component top_DOUBLE2_EXPECT_MON
@@ -69,16 +69,16 @@ architecture behav of top_DOUBLE2_stream is
   --    ap_rst             : IN  STD_LOGIC;
   --    timeClock          : IN  STD_LOGIC_VECTOR (31 downto 0);
   --    intervalDelay_a    : IN  STD_LOGIC_VECTOR (31 downto 0);
-  --    failcount_a        : OUT STD_LOGIC_VECTOR (31 downto 0);
+  --    failurecount_a        : OUT STD_LOGIC_VECTOR (31 downto 0);
   --    buffer_a_V_dout    : IN  STD_LOGIC_VECTOR (31 downto 0);
   --    buffer_a_V_empty_n : IN  STD_LOGIC;
   --    buffer_a_V_read    : OUT STD_LOGIC;
   --    expect_a_V_dout    : IN  STD_LOGIC_VECTOR (31 downto 0);
   --    expect_a_V_empty_n : IN  STD_LOGIC;
   --    expect_a_V_read    : OUT STD_LOGIC;
-  --    fail_a_V_din       : OUT STD_LOGIC_VECTOR (159 downto 0);
-  --    fail_a_V_full_n    : IN  STD_LOGIC;
-  --    fail_a_V_write     : OUT STD_LOGIC);
+  --    failure_a_V_din       : OUT STD_LOGIC_VECTOR (159 downto 0);
+  --    failure_a_V_full_n    : IN  STD_LOGIC;
+  --    failure_a_V_write     : OUT STD_LOGIC);
   --end component;
   
   component internal_fifo32
@@ -132,11 +132,11 @@ architecture behav of top_DOUBLE2_stream is
   signal buffer_callTime_histOUT_full  : STD_LOGIC;
   signal buffer_callTime_histOUT_empty : STD_LOGIC;
   
-  signal fail_histOUT_V_din        : STD_LOGIC_VECTOR (159 downto 0);
-  signal fail_histOUT_V_full_n     : STD_LOGIC;
-  signal fail_histOUT_V_write      : STD_LOGIC;
-  signal buffer_fail_histOUT_full  : STD_LOGIC;
-  signal buffer_fail_histOUT_empty : STD_LOGIC;
+  signal failure_histOUT_V_din        : STD_LOGIC_VECTOR (159 downto 0);
+  signal failure_histOUT_V_full_n     : STD_LOGIC;
+  signal failure_histOUT_V_write      : STD_LOGIC;
+  signal buffer_failure_histOUT_full  : STD_LOGIC;
+  signal buffer_failure_histOUT_empty : STD_LOGIC;
   
   
   signal callTime_histOUT_mon_dout    : STD_LOGIC_VECTOR (31 downto 0);
@@ -233,7 +233,7 @@ begin
       ap_clk               => ap_clk,
       ap_rst               => ap_rst,
       intervalDelay_a    => intervalDelay_histOUT_i,
-      failcount_a        => failcount_histOUT,
+      failurecount_a        => failurecount_histOUT,
       buffer_a_V_dout    => buffer_histOUT_V_dout,
       buffer_a_V_empty_n => buffer_histOUT_V_empty_n,
       buffer_a_V_read    => buffer_histOUT_V_read,      
@@ -243,9 +243,9 @@ begin
       expect_a_V_dout    => expect_histOUT_V_dout,
       expect_a_V_empty_n => expect_histOUT_V_empty_n,
       expect_a_V_read    => expect_histOUT_V_read,
-      fail_a_V_din       => fail_histOUT_V_din,
-      fail_a_V_full_n    => fail_histOUT_V_full_n,
-      fail_a_V_write     => fail_histOUT_V_write);
+      failure_a_V_din       => failure_histOUT_V_din,
+      failure_a_V_full_n    => failure_histOUT_V_full_n,
+      failure_a_V_write     => failure_histOUT_V_write);
       
 
     --top_DOUBLE2_EXPECT_MON_2: top_DOUBLE2_EXPECT_MON
@@ -254,29 +254,29 @@ begin
     --    ap_rst             => ap_rst,
     --    timeClock          => timeClock,
     --    intervalDelay_a    => intervalDelay_histOUT_i,
-    --    failcount_a        => failcount_histOUT,
+    --    failurecount_a        => failurecount_histOUT,
     --    buffer_a_V_dout    => buffer_histOUT_V_dout,
     --    buffer_a_V_empty_n => buffer_histOUT_V_empty_n,
     --    buffer_a_V_read    => buffer_histOUT_V_read,
     --    expect_a_V_dout    => expect_histOUT_V_dout,
     --    expect_a_V_empty_n => expect_histOUT_V_empty_n,
     --    expect_a_V_read    => expect_histOUT_V_read,
-    --    fail_a_V_din       => fail_histOUT_V_din,
-    --    fail_a_V_full_n    => fail_histOUT_V_full_n,
-    --    fail_a_V_write     => fail_histOUT_V_write);
+    --    failure_a_V_din       => failure_histOUT_V_din,
+    --    failure_a_V_full_n    => failure_histOUT_V_full_n,
+    --    failure_a_V_write     => failure_histOUT_V_write);
 
-  fail_histOUT_V_empty_n <= not buffer_fail_histOUT_empty;
-  fail_histOUT_V_full_n <= not buffer_fail_histOUT_full;
+  failure_histOUT_V_empty_n <= not buffer_failure_histOUT_empty;
+  failure_histOUT_V_full_n <= not buffer_failure_histOUT_full;
   
-  buffer_fail_histOUT: internal_fifo160
+  buffer_failure_histOUT: internal_fifo160
       port map (
         clk   => ap_clk,
         srst  => ap_rst,
-        din   => fail_histOUT_V_din,
-        wr_en => fail_histOUT_V_write,
-        rd_en => fail_histOUT_V_read,
-        dout  => fail_histOUT_V_dout,
-        full  => buffer_fail_histOUT_full,
-        empty => buffer_fail_histOUT_empty);
+        din   => failure_histOUT_V_din,
+        wr_en => failure_histOUT_V_write,
+        rd_en => failure_histOUT_V_read,
+        dout  => failure_histOUT_V_dout,
+        full  => buffer_failure_histOUT_full,
+        empty => buffer_failure_histOUT_empty);
     
 end behav;

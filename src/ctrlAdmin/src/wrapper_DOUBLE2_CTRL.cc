@@ -97,67 +97,67 @@ running_DOUBLE2_CTRL_callTime(hls::stream<unsigned int> &dst, hls::stream<unsign
 
 
 ///////////////////////////////////////////////////////////////////////
-//                  Function:   failCount
+//                  Function:   failureCount
 //////////////////////////////////////////////////////////////////////
-union UNION_RET_failCount{
-  unsigned int words32[sizeof(ret_DOUBLE2_CTRL_failCount)/sizeof(int)];
-  unsigned short words16[sizeof(ret_DOUBLE2_CTRL_failCount)/sizeof(short)];
-  unsigned char words8[sizeof(ret_DOUBLE2_CTRL_failCount)]; 
-}byteRet_failCount;
+union UNION_RET_failureCount{
+  unsigned int words32[sizeof(ret_DOUBLE2_CTRL_failureCount)/sizeof(int)];
+  unsigned short words16[sizeof(ret_DOUBLE2_CTRL_failureCount)/sizeof(short)];
+  unsigned char words8[sizeof(ret_DOUBLE2_CTRL_failureCount)]; 
+}byteRet_failureCount;
 
 
 void
-running_DOUBLE2_CTRL_failCount(hls::stream<unsigned int> &dst, unsigned int failCount_histOUT)
+running_DOUBLE2_CTRL_failureCount(hls::stream<unsigned int> &dst, unsigned int failureCount_histOUT)
 {
   short index = 0;
   unsigned int ptr_return;
-  ptr_return = failCount_histOUT;
-  byteRet_failCount.words32[index++] = ptr_return;
+  ptr_return = failureCount_histOUT;
+  byteRet_failureCount.words32[index++] = ptr_return;
 
-  for(int itReturn=0; itReturn != sizeof(byteRet_failCount.words32)/DOUBLE2_BUS_WIDTH_BYTES; itReturn++)  
-    dst.write(byteRet_failCount.words32[itReturn]);
+  for(int itReturn=0; itReturn != sizeof(byteRet_failureCount.words32)/DOUBLE2_BUS_WIDTH_BYTES; itReturn++)  
+    dst.write(byteRet_failureCount.words32[itReturn]);
 }
 ///////////////////////////////////////////////////////////////////////
 
 
 
 ///////////////////////////////////////////////////////////////////////
-//                  Function:   fail
+//                  Function:   failure
 //////////////////////////////////////////////////////////////////////
-union UNION_RET_fail{
-  unsigned int words32[sizeof(ret_DOUBLE2_CTRL_fail)/sizeof(int)];
-  unsigned short words16[sizeof(ret_DOUBLE2_CTRL_fail)/sizeof(short)];
-  unsigned char words8[sizeof(ret_DOUBLE2_CTRL_fail)]; 
-}byteRet_fail;
+union UNION_RET_failure{
+  unsigned int words32[sizeof(ret_DOUBLE2_CTRL_failure)/sizeof(int)];
+  unsigned short words16[sizeof(ret_DOUBLE2_CTRL_failure)/sizeof(short)];
+  unsigned char words8[sizeof(ret_DOUBLE2_CTRL_failure)]; 
+}byteRet_failure;
 
 void
-running_DOUBLE2_CTRL_fail(hls::stream<unsigned int> &dst, hls::stream<tfail> &fail_histOUT)
+running_DOUBLE2_CTRL_failure(hls::stream<unsigned int> &dst, hls::stream<tfailure> &failure_histOUT)
 {
   short index = 0;
-  tfail aux;
+  tfailure aux;
   
-  aux = fail_histOUT.read();
+  aux = failure_histOUT.read();
 
-  byteRet_fail.words32[index++] = aux._callcount;
+  byteRet_failure.words32[index++] = aux._callcount;
   
   unsigned int ptr_return[1];
   toSequence(aux._return, ptr_return);
-  byteRet_fail.words32[index++] = ptr_return[0];
+  byteRet_failure.words32[index++] = ptr_return[0];
   
   unsigned int ptr_expect[1];
   toSequence(aux._expect, ptr_expect);
-  byteRet_fail.words32[index++] = ptr_expect[0];
+  byteRet_failure.words32[index++] = ptr_expect[0];
   
   unsigned int ptr_time;
   ptr_time = aux._time;
-  byteRet_fail.words32[index++] = ptr_time;
+  byteRet_failure.words32[index++] = ptr_time;
   
   unsigned int ptr_delay;
   ptr_delay = aux._delay;
-  byteRet_fail.words32[index++] = ptr_delay;
+  byteRet_failure.words32[index++] = ptr_delay;
 
-  for(int itReturn=0; itReturn != sizeof(byteRet_fail.words32)/DOUBLE2_BUS_WIDTH_BYTES; itReturn++)  
-    dst.write(byteRet_fail.words32[itReturn]);
+  for(int itReturn=0; itReturn != sizeof(byteRet_failure.words32)/DOUBLE2_BUS_WIDTH_BYTES; itReturn++)  
+    dst.write(byteRet_failure.words32[itReturn]);
 }
 ///////////////////////////////////////////////////////////////////////
 

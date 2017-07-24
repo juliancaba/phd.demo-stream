@@ -4,12 +4,15 @@ REG_1=./register
 
 PRJ=tmp
 
+VERSION=2015
+
+
 all: gen copy run dcp
 
 gen: genCallMonitor genExpectMonitor genRegister
 
-run: 
-	vivado -mode batch -source create.tcl
+run: create_$(VERSION).tcl
+	vivado -mode batch -source $^
 
 
 genRegister:
