@@ -4,12 +4,12 @@
 
 
 import unittest
-from unittest_time import TimeTestCase
+from rc_unittest_remote import RCUnittestTestCase
 
 from l2norm_stream import *
 
 
-class TestL2Norm(TimeTestCase):
+class TestL2Norm(RCUnittestTestCase):
 
     def test_l2norm(self):
         ref = [0.0, 0.027164, 0.054328,
@@ -22,17 +22,17 @@ class TestL2Norm(TimeTestCase):
         for i in range(0,16):
             din.append(float(i))
             
-        self.UNITTEST_TIME_RESET()
-        self.CONFIGURE_UNITTEST_TIME_HW_ADDR(0x41000000)
-        self.CONFIGURE_UNITTEST_TIME_INPUT_32BIT_WORDS(1)
-        self.CONFIGURE_UNITTEST_TIME_OUTPUT_32BIT_WORDS(1)
-        self.CONFIGURE_UNITTEST_TIME_ENABLE_CYCLES(0x00000090)
+        self.TEST_RESET()
+        self.CONFIGURE_HW_ADDR(0x41000000)
+        self.CONFIGURE_IGNORE_INPUT(1)
+        self.CONFIGURE_IGNORE_OUTPUT(1)
+        self.CONFIGURE_ENABLE_CYCLES(0x00000090)
         
         l2norm_intervalDelay(6)
         l2norm_expect(16, ref)
         l2norm_stimuli(16, din)
           
-        self.UNITTEST_TIME_CONFIGURE()
+        self.TEST_CONFIGURE()
         
         self.assertTimeLT(200)
         
